@@ -1,0 +1,9 @@
+.container {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    grid-template-rows: 250px;
+}
+
+.a-frame {
+    z-index: -1;
+}
