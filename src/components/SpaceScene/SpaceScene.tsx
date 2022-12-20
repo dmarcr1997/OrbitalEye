@@ -1,7 +1,6 @@
 import 'aframe';
 import {
     Scene,
-    Button,
     Box,
     Sphere,
     Cylinder,

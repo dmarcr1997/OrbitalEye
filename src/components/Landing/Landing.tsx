@@ -2,21 +2,28 @@ import {
   useAddress, 
   useNetwork,
   ConnectWallet, 
-  Web3Button, 
-  useContract, 
-  useNFTBalance 
 } from '@thirdweb-dev/react';
-// import { ChainId } from '@thirdweb-dev/sdk';
-import { useState, useEffect, useMemo } from 'react';
-// import { AddressZero } from "@ethersproject/constants";
+import { useEffect } from 'react';
+
+//Styles and Images imports
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import { landingPageContainer } from './Landing.styles';
 import OrbitalEye from '../../assets/images/OrbitalEyeLogo.png';
-const Landing = () => {
+import { useNavigate } from 'react-router-dom';
+
+const Landing = ({ redirectToDashboard }: any) => {
   const address = useAddress();
   const network = useNetwork();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    const goToDashboard = () => navigate('/dashboard');
+    if(address){
+      console.log('Wallet Connected: ', address);
+      goToDashboard();
+    }
+  }, [address, navigate]);
   return (
     <Container maxWidth='xl' sx={landingPageContainer}>
       <Box>
