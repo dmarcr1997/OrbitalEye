@@ -12,6 +12,7 @@
     "@belivvr/aframe-react": "^0.4.2",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.0",
     "@thirdweb-dev/react": "^3.6.8",
     "@thirdweb-dev/sdk": "^3.6.8",

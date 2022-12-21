@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route, redirect } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SpaceScene from './components/SpaceScene/SpaceScene';
-import DAOMember from './components/DAOMember';
+import DAOMember from './components/DAOMember/DAOMember';
 import Landing from './components/Landing/Landing';
 import Dashboard from "./components/Dashboard/Dashboard";
 import './App.css'
