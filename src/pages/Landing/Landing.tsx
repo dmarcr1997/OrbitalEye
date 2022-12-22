@@ -1,6 +1,5 @@
 import { 
   useAddress, 
-  useNetwork,
   ConnectWallet, 
 } from '@thirdweb-dev/react';
 import { useEffect } from 'react';
@@ -12,9 +11,8 @@ import { landingPageContainer } from './Landing.styles';
 import OrbitalEye from '../../assets/images/OrbitalEyeLogo.png';
 import { useNavigate } from 'react-router-dom';
 
-const Landing = ({ redirectToDashboard }: any) => {
+const Landing = () => {
   const address = useAddress();
-  const network = useNetwork();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +23,7 @@ const Landing = ({ redirectToDashboard }: any) => {
     }
   }, [address, navigate]);
   return (
-    <Container maxWidth='xl' sx={landingPageContainer}>
+    <Container maxWidth={false} sx={landingPageContainer}>
       <Box>
         <img src={OrbitalEye} className="logo" alt="OrbitalEye logo" />
       </Box>

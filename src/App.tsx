@@ -1,22 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SpaceScene from './components/SpaceScene/SpaceScene';
-import DAOMember from './components/DAOMember/DAOMember';
-import Landing from './components/Landing/Landing';
-import Dashboard from "./components/Dashboard/Dashboard";
+import SpaceScene from './pages/SpaceScene/SpaceScene';
+import DAOMember from './pages/DAOMember/DAOMember';
+import Landing from './pages/Landing/Landing';
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Header from "./pages/Header/Header";
 import './App.css'
 
 function App() {
   return (
-    <div className="App">
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/member" element={<DAOMember />} />
-          <Route path="/bounty" element={<SpaceScene />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Routes>
+        <Header />
+          <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/member" element={<DAOMember />} />
+            <Route path="/bounty" element={<SpaceScene />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+          </Routes>
       </BrowserRouter>
-    </div>
   )
 }
 
