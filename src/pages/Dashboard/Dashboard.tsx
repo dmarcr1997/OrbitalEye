@@ -1,11 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { dashboardContainer } from './Dashboard.styles';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import NeoList from '../../components/NeoList';
 import DateForm from '../../components/DateForm';
-import NeoTable from '../../components/NEOTable';
+import NeoTable from '../../components/NeoTable';
+import { useAddress } from '@thirdweb-dev/react';
+import { useNavigate } from 'react-router-dom';
 
 interface NEODataObject {
     id: number;
@@ -28,6 +30,17 @@ const Dashboard = () => {
     maxDate.setDate(now.getDate() + 7);
     const [later, setLater] = useState(maxDate);
     const [loading, setLoading] = useState(false);
+
+    const address = useAddress();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const goToLanding = () => navigate('/');
+        if(!address){
+            console.log('No Wallet Connected');
+            goToLanding();
+        }
+    }, [address, navigate]);
     
     useEffect(() => {
         const startDate = now.toISOString().split('T')[0];

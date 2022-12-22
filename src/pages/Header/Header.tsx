@@ -16,8 +16,7 @@ import FaceIcon from '@mui/icons-material/Face';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { 
     useAddress, 
-    useNetwork,
-    ConnectWallet, 
+    useDisconnect 
 } from '@thirdweb-dev/react';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,8 +26,10 @@ const settings = ['Profile', 'Disconnect'];
 const Header = () => {
     const address = useAddress();
     const navigate = useNavigate();
+    const disconnect = useDisconnect();
+    
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-
+    const [showProfile, setShowProfile] = React.useState<boolean>(false);
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -43,6 +44,19 @@ const Header = () => {
         setAnchorElUser(null);
     };
 
+    const handleClickMenuItem = (item: string) => {
+        if(item === 'Disconnect'){
+            disconnect();
+        } else {
+            console.log(showProfile, address)
+            setShowProfile((value: boolean) => !value);
+        }
+    }
+
+    const shortAddress = () => {
+        return address?.substring(0, 6) + '...' + address?.substring(address.length - 4);
+    }
+
     const theme = createTheme({
         palette: {
             mode: 'dark',
@@ -53,65 +67,68 @@ const Header = () => {
             <AppBar position="static">
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                        mr: 2,
-                        display: { xs: 'none', md: 'flex' },
-                        fontFamily: 'monospace',
-                        fontWeight: 700,
-                        letterSpacing: '.2rem',
-                        color: 'inherit',
-                        textDecoration: 'none',
-                        }}
-                    >
-                        Neo Bounties
-                    </Typography>
-
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                        <Button
-                            key={page.name}
-                            onClick={() => handleClickNavMenu(page.route)}
-                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            href="/"
+                            sx={{
+                            mr: 2,
+                            display: { xs: 'none', md: 'flex' },
+                            fontFamily: 'monospace',
+                            fontWeight: 700,
+                            letterSpacing: '.2rem',
+                            color: 'inherit',
+                            textDecoration: 'none',
+                            }}
                         >
-                            {page.name}
-                        </Button>
-                        ))}
-                    </Box>
+                            Neo Bounties
+                        </Typography>
 
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <FaceIcon />
-                        </IconButton>
-                        </Tooltip>
-                        <Menu
-                        sx={{ mt: '45px' }}
-                        id="menu-appbar"
-                        anchorEl={anchorElUser}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={Boolean(anchorElUser)}
-                        onClose={handleCloseUserMenu}
-                        >
-                        {settings.map((setting) => (
-                            <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                            <Typography textAlign="center">{setting}</Typography>
-                            </MenuItem>
-                        ))}
-                        </Menu>
-                    </Box>
+                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                            {pages.map((page) => (
+                            <Button
+                                key={page.name}
+                                onClick={() => handleClickNavMenu(page.route)}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                {page.name}
+                            </Button>
+                            ))}
+                        </Box>
+                        <Box sx={{ flexGrow: 0}}>
+                            {showProfile && address ? <Typography>{shortAddress()}&nbsp;</Typography> : ''}
+                        </Box>
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Open settings">
+                                
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <FaceIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                            >
+                            {settings.map((setting) => (
+                                <MenuItem key={setting} onClick={() => handleClickMenuItem(setting)}>
+                                <Typography textAlign="center">{setting}</Typography>
+                                </MenuItem>
+                            ))}
+                            </Menu>
+                        </Box>
                     </Toolbar>
                 </Container>
             </AppBar>
