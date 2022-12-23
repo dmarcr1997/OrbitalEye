@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
 const NeoTable = ({data, handleClick}: any) => {
     return (
         <TableContainer sx={{ maxHeight: 400, border: '2px solid #27163c' }} component={Paper}>
@@ -25,7 +26,7 @@ const NeoTable = ({data, handleClick}: any) => {
                 <TableBody>
                 {data.map((row: any) => (
                     <TableRow
-                    key={row.id}
+                    key={`${row.id}`}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                         <TableCell onClick={() => handleClick(row)} component="th" scope="row">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { dashboardContainer } from './Dashboard.styles';
@@ -6,21 +6,10 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import NeoList from '../../components/NeoList';
 import DateForm from '../../components/DateForm';
 import NeoTable from '../../components/NeoTable';
+import UploadFileForm from '../../components/UploadFileForm';
+import { NEODataObject } from '../../models/INEODataObject';
 import { useAddress } from '@thirdweb-dev/react';
 import { useNavigate } from 'react-router-dom';
-
-interface NEODataObject {
-    id: number;
-    name: string;
-    link: string;
-    velocity: number;
-    missDistance: number;
-    diameter: number;
-    closestApproachDate: string;
-    absoluteMagnitude: number;
-    hazardous: boolean;
-    sentry: boolean;
-};
 
 const Dashboard = () => {
     const [items, setItems] = useState<NEODataObject[]>([]);
@@ -39,23 +28,27 @@ const Dashboard = () => {
         if(!address){
             console.log('No Wallet Connected');
             goToLanding();
+        } else {
+            setLoading(true);
         }
     }, [address, navigate]);
     
     useEffect(() => {
-        const startDate = now.toISOString().split('T')[0];
-        const endDate = later.toISOString().split('T')[0];
-        setRows([]);
-        console.log(startDate, endDate);
-        fetch(`https://www.neowsapp.com/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&detailed=false`)
-                .then(data => data.json())
-                .then(data => {
-                    console.log(data.near_earth_objects);
-                    const NEOS = Object.values(data.near_earth_objects);
-                    NEOS.forEach((value: any) => value.map((v: any) => addRow(v)));
-                    setLoading(false);
-                })
-                .catch(err => console.error(err))
+        if(loading === true){
+            const startDate = now.toISOString().split('T')[0];
+            const endDate = later.toISOString().split('T')[0];
+            setRows([]);
+            console.log(startDate, endDate);
+            fetch(`https://www.neowsapp.com/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&detailed=false`)
+                    .then(data => data.json())
+                    .then(data => {
+                        console.log(data.near_earth_objects);
+                        const NEOS = Object.values(data.near_earth_objects);
+                        NEOS.forEach((value: any) => value.map((v: any) => addRow(v)));
+                        setLoading(false);
+                    })
+                    .catch(err => console.error(err))
+        }
     },[loading]);
 
     function addNEO(neo: NEODataObject) {
@@ -122,6 +115,9 @@ const Dashboard = () => {
         <ThemeProvider theme={theme}>
             <Container maxWidth={false} sx={dashboardContainer}>
                 <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <UploadFileForm neos={items}/>
+                    </Grid>
                     <Grid item xs={6}>
                         <NeoList items={items} deleteHandler={deleteNEO}/>
                     </Grid>

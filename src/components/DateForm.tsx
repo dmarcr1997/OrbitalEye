@@ -8,11 +8,14 @@ import Typography from "@mui/material/Typography";
 
 const DateForm = ({ startChange, endChange, update, now, later}: any) => {
     return (
-        <Box component={Paper} sx={{border: '2px solid #27163c', mt: 2, }}>
+        <Box component={Paper} sx={{border: '2px solid #27163c' }}>
             <Grid container>
                 <Grid item xs={12}>
-                    <Typography sx={{ mt: 4, mb: 2, ml: 1 }} variant="h6" component="div">
+                    <Typography sx={{ mt: 4, ml: 1 }} variant="h6" component="div">
                         NEOs Search Dates
+                    </Typography>
+                    <Typography sx={{ mb: 2}} variant="body1" component="div">
+                        Dates can only be in seven day range
                     </Typography>
                 </Grid>
                 <Grid item xs={12}>

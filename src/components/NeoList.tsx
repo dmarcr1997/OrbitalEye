@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 const NeoList = ({ items, deleteHandler }: any) => {
     return (
-        <Box component={Paper} sx={{border: '2px solid #27163c', mt: 2, textAlign: 'left' }}>
+        <Box component={Paper} sx={{border: '2px solid #27163c', textAlign: 'left' }}>
             <Typography sx={{ mt: 4, mb: 2, ml: 1 }} variant="h6" component="div">
                 Selected NEOs
             </Typography>
