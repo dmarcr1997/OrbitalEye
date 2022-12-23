@@ -48,7 +48,6 @@ const Header = () => {
         if(item === 'Disconnect'){
             disconnect();
         } else {
-            console.log(showProfile, address)
             setShowProfile((value: boolean) => !value);
         }
     }

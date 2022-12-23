@@ -3,6 +3,7 @@ export interface NEODataObject {
     name: string;
     link: string;
     velocity: number;
+    bounty: number;
     missDistance: number;
     diameter: number;
     closestApproachDate: string;

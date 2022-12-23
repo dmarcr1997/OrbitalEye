@@ -38,7 +38,6 @@ const Dashboard = () => {
             const startDate = now.toISOString().split('T')[0];
             const endDate = later.toISOString().split('T')[0];
             setRows([]);
-            console.log(startDate, endDate);
             fetch(`https://www.neowsapp.com/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&detailed=false`)
                     .then(data => data.json())
                     .then(data => {
@@ -62,13 +61,11 @@ const Dashboard = () => {
 
     function changeStart(e: any) {
         const date = new Date(e.target.value);
-        console.log("Start: ", date)
         setNow(date);
     }
 
     function changeEnd(e: any) {
         const date = new Date(e.target.value);
-        console.log("End: ", date)
         setLater(date);
     }
 
@@ -84,20 +81,27 @@ const Dashboard = () => {
     function addRow(neo: any) {
         const { id, name, links, estimated_diameter, close_approach_data, absolute_magnitude_h, is_potentially_hazardous_asteroid, is_sentry_object } = neo;
         const closestApproachData = close_approach_data[0];
+        const hazardMultiplier = is_potentially_hazardous_asteroid ? 2 : 1;
         const avgEstDiameter = (estimated_diameter.kilometers.estimated_diameter_max + estimated_diameter.kilometers.estimated_diameter_min) / 2;
+        const bounty = (avgEstDiameter * absolute_magnitude_h * hazardMultiplier) / 0.01;
         const newRow = {
             id: id,
             name: name,
             link: links.self,
-            velocity: closestApproachData.relative_velocity.kilometers_per_hour,
-            missDistance: closestApproachData.miss_distance.kilometers,
-            diameter: avgEstDiameter,
+            bounty: floorItTwoPlaces(bounty),
+            velocity: floorItTwoPlaces(closestApproachData.relative_velocity.kilometers_per_hour),
+            missDistance: floorItTwoPlaces(closestApproachData.miss_distance.kilometers),
+            diameter: floorItTwoPlaces(avgEstDiameter),
             closestApproachDate: closestApproachData.close_approach_date,
-            absoluteMagnitude: absolute_magnitude_h,
+            absoluteMagnitude: floorItTwoPlaces(absolute_magnitude_h),
             hazardous: is_potentially_hazardous_asteroid,
             sentry: is_sentry_object
         }
         createDataRow(newRow);
+    }
+
+    const floorItTwoPlaces = (num: number) => {
+        return Math.floor(num * 100) / 100;
     }
     const createDataRow = (newRow: NEODataObject) => {
         setRows((rows: NEODataObject[]) => [

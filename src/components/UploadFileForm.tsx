@@ -40,14 +40,13 @@ const UploadFileForm = ({neos}: any) => {
     function sendFile() {
         if(!uploading) console.log("Sending file...", file);
         //TODO: Send file to ipfs
-        setStudiedBody('')
-        setFile({})
+        setStudiedBody('');
+        setFile({});
     }
 
     const checkData = () => {
-        const shouldUpload = uploading || !file || studiedBody === ''
-        console.log("DEBUGG2", shouldUpload)
-        return shouldUpload
+        const shouldUpload = uploading || !file || studiedBody === '';
+        return shouldUpload;
     }
 
     return (

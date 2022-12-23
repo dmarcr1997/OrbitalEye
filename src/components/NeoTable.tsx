@@ -14,6 +14,7 @@ const NeoTable = ({data, handleClick}: any) => {
                 <TableHead>
                 <TableRow>
                     <TableCell>NAME&nbsp;(Click to Add)</TableCell>
+                    <TableCell align="right">REWARD&nbsp;($TEA)</TableCell>
                     <TableCell align="right">VELOCITY&nbsp;(km/s)</TableCell>
                     <TableCell align="right">DISTANCE&nbsp;(km)</TableCell>
                     <TableCell align="right">DIAMETER&nbsp;(km)</TableCell>
@@ -32,6 +33,7 @@ const NeoTable = ({data, handleClick}: any) => {
                         <TableCell onClick={() => handleClick(row)} component="th" scope="row">
                             {row.name}
                         </TableCell>
+                        <TableCell align="right">{row.bounty}</TableCell>
                         <TableCell align="right">{row.velocity}</TableCell>
                         <TableCell align="right">{row.missDistance}</TableCell>
                         <TableCell align="right">{row.diameter}</TableCell>
