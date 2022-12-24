@@ -21,7 +21,7 @@ const UploadFileForm = ({neos}: any) => {
         setUploading(true);
         const files = e.target.files;
         try {
-            console.log(files[0]);
+            // console.log(files[0]);
             setFile(files[0]);
             // const added = await client.add(files[0]); ipfs connection TODO
             // setFile({ filename: files[0].name, hash: added.path });

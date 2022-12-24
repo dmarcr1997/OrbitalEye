@@ -20,7 +20,7 @@ import {
 } from '@thirdweb-dev/react';
 import { useNavigate } from 'react-router-dom';
 
-const pages = [{ name: 'Dashboard', route: '/dashboard'}, { name: 'View', route: '/bounties'}, { name: 'About', route: '/about'}];
+const pages = [{ name: 'Dashboard', route: '/dashboard'}, { name: 'View', route: '/bounty'}, { name: 'About', route: '/about'}];
 const settings = ['Profile', 'Disconnect'];
 
 const Header = () => {

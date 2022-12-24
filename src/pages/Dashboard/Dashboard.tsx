@@ -41,7 +41,7 @@ const Dashboard = () => {
             fetch(`https://www.neowsapp.com/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&detailed=false`)
                     .then(data => data.json())
                     .then(data => {
-                        console.log(data.near_earth_objects);
+                        // console.log(data.near_earth_objects);
                         const NEOS = Object.values(data.near_earth_objects);
                         NEOS.forEach((value: any) => value.map((v: any) => addRow(v)));
                         setLoading(false);

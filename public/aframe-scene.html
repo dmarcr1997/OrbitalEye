@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Earth</title>
+	<meta name="description" content="Inside Earth in VR with A-Frame">
+	
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
+  </head>
+  <body>
+  <a-scene loading-screen="dotsColor: red; backgroundColor: black" fog="type: exponential" >
+    <a-assets>
+      <img id="stars" crossorigin="anonymous" src="https://cdn.glitch.com/f587d4bd-d7c4-485a-927e-01c1448b3f25%2Fstarglobe_equirectangular_reversed_16x8k.jpg?v=1597243372592"/>  <!-- https://thefulldomeblog.com/2013/11/13/background-stars-v2/ -->
+      <img id="earth" crossorigin="anonymous" src="https://cdn.glitch.com/f587d4bd-d7c4-485a-927e-01c1448b3f25%2FNasa_land_ocean_ice_8192.jpg?v=1597243387888"/>
+      <img id="clouds" src="https://cdn.glitch.com/f587d4bd-d7c4-485a-927e-01c1448b3f25%2Fclouds.png?v=1597243424347"/>
+      <img id="moon" src="https://cdn.glitch.com/f587d4bd-d7c4-485a-927e-01c1448b3f25%2Flroc_color_poles_1k.jpg?v=1597243355707"/>
+      <img id="moon_displacement" src="https://cdn.glitch.com/f587d4bd-d7c4-485a-927e-01c1448b3f25%2Fldem_3_8bit.jpg?v=1597243356101"/>
+    </a-assets>
+
+    <a-entity>
+        <!-- Clouds -->
+		<a-animation attribute="rotation"
+			 easing="linear" 
+			 dur="100000"
+			 fill="forwards"
+			 to="0 360 0"
+			 repeat="indefinite"></a-animation>
+        <a-sphere position="0 .25 0" radius="3.28" material="src:#clouds;opacity: .99">
+		
+		<!-- Earth -->
+		<a-animation attribute="rotation"
+			 easing="linear" 
+			 dur="220000"
+			 fill="forwards"
+			 from="210 -270 0"      
+			 to="-150 90 0"
+			 repeat="indefinite"></a-animation>
+        </a-sphere>
+        <a-sphere position="0 .25 0" radius="3.25" material="src:#earth; roughness: 1;">
+
+		<!-- Moon -->
+		<a-animation attribute="rotation"
+			 easing="linear" 
+			 dur="150000"
+			 fill="forwards"
+			 to="0 360 0"
+			 repeat="indefinite"></a-animation>
+
+          <a-entity position="20 0 1">
+            <a-sphere 
+              src="#moon" 
+              displacement-map="#moon_displacement" 
+              displacement-bias="0.5"
+              displacement-scale="0.2"           
+              segments-height="128"
+              segments-width="128"              
+              position="0 0 0" 
+              radius=".75" 
+              roughness="1"
+              >
+            </a-sphere>
+            <a-animation attribute="rotation"
+                 easing="linear"         
+                 dur="150000"
+                 fill="forwards"
+                 to="0 360 0"
+                 repeat="indefinite"></a-animation>
+          </a-entity>
+
+        </a-sphere>
+      </a-entity>  
+      <a-entity light="color: #fff4cc; intensity: 1.75" position=".7 0 -1"></a-entity>
+
+      <a-sky id="image-360" src="#stars"
+             animation__fade="property: components.material.material.color; type: color; from: #FFF; to: #000; dur: 300; startEvents: fade"
+             animation__fadeback="property: components.material.material.color; type: color; from: #000; to: #FFF; dur: 300; startEvents: animationcomplete__fade">
+	    </a-sky>
+		    <!--
+          <a-cursor	
+            id="cursor"
+            animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
+            animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
+            event-set__mouseenter="_event: mouseenter; color: springgreen"
+            event-set__mouseleave="_event: mouseleave; color: black"
+            raycaster="objects: .link"></a-cursor>	
+        -->
+	    </a-entity>
+    </a-scene>
+
+  </body>
+</html>
