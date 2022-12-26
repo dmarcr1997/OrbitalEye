@@ -27,7 +27,6 @@ const Dashboard = () => {
         const goToLanding = () => navigate('/');
         if(!address){
             console.log('No Wallet Connected');
-            goToLanding();
         } else {
             setLoading(true);
         }
