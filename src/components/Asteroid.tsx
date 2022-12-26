@@ -2,7 +2,7 @@ import Ecliptic from './Ecliptic';
 import { useFrame, useLoader } from '@react-three/fiber';
 import { TextureLoader } from 'three';
 import AsteroidColorMap from '../assets/textures/asteroid/ground_0010_color_4k.jpg';
-import AsteroidNormalMap from '../assets/textures/asteroid/ground_0010_normal_4k.png';
+import AsteroidNormalMap from '../assets/textures/asteroid/ground_0010_normal_2k.png';
 import AsteroidSpecMap from '../assets/textures/asteroid/ground_0010_height_4k.png';
 import { useRef } from 'react';
 const EARTH_DIAMETER = 12742;
