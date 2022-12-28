@@ -1,5 +1,5 @@
 import { useFrame, useLoader } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { MapControls } from '@react-three/drei';
 import React, { useRef } from 'react';
 import { TextureLoader } from 'three';
 import * as THREE from 'three';
@@ -24,8 +24,64 @@ const Earth = (props: any) => {
         earthRef.current.rotation.y = elapsedTime / 6;
         //@ts-ignore
         cloudRef.current.rotation.y = elapsedTime / 7;
-        
     })
+
+    function populateAsteroids() {
+        console.log(props.asteroids)
+        return props.asteroids.map((body: any) => {
+            return (
+            <Asteroid 
+                position={[body.semiMajorAxis * 10, 0, 0]}
+                diameter={body.diameter}
+                xRadius={body.semiMajorAxis * 10}
+                eccentricity={body.eccentricity} //eccentricity
+                // incline={}
+                textProperties={{
+                    name: body.name,
+                    bounty: body.bounty,
+                }}
+                aphelion={body.aphelion * 10} //aphelion * 10
+                perihelion={body.perihelion * 10} //perihelion * 10
+                speedRatio={body.velocity / 30}
+            />
+            )
+        })
+    }
+
+    function defaultAsteroids() {
+        return <>
+            <Asteroid 
+                // position={[9.582667981568604 * Math.cos(7.436867435425389), 9.582667981568604 * Math.sin(7.436867435425389), 0]}
+                position={[9.582667981568604, 0, 0]}
+                diameter={0.4164305829}
+                xRadius={9.582667981568604}
+                eccentricity={.08347045379205167} //eccentricity
+                // incline={7.436867435425389}
+                textProperties={{
+                    name: '341843 (2008 EV5)',
+                    bounty: '$2000'
+                }}
+                aphelion={10.3825376265287} //aphelion * 10
+                perihelion={8.782798336608509} //perihelion * 10
+                speedRatio={6.817303746 / 30}
+            />
+            <Asteroid 
+                // position={[21.70692743796778 * Math.cos(12.01802604414806), 21.70692743796778 * Math.sin(12.01802604414806), 0]} //semi-major axis * 10
+                position={[21.70692743796778, 0, 0]}
+                diameter={1.411050695} 
+                xRadius={21.70692743796778}
+                eccentricity={.6977429473838328} //eccentricity
+                // incline={12.01802604414806}
+                textProperties={{
+                    name: '349925 (2009 WC26)',
+                    bounty: '$5000'
+                }}
+                aphelion={36.85278296718241} //aphelion * 10
+                perihelion={6.561071908753151} //perihelion * 10
+                speedRatio={4.8991899774 / 30} //km/s speed / earth km/s speed
+            />
+        </>
+    }
 
     return (
         <>
@@ -46,38 +102,18 @@ const Earth = (props: any) => {
                 <sphereGeometry args={[ 1, 32, 32 ]}/>
                 <meshPhongMaterial specularMap={specularMap} />
                 <meshStandardMaterial map={colorMap} normalMap={normalMap} metalness={0.4} roughness={0.7}/>
-                <OrbitControls 
+                {/* <OrbitControls 
                     enableZoom={true} 
                     enablePan={true} 
                     enableRotate={true} 
                     zoomSpeed={0.6} 
                     panSpeed={0.5} 
                     rotateSpeed={0.4}
-                />
+                /> */}
+                <MapControls />
             </mesh>
-            <Asteroid 
-                // position={[9.582667981568604 * Math.cos(7.436867435425389), 9.582667981568604 * Math.sin(7.436867435425389), 0]}
-                position={[9.582667981568604, 0, 0]}
-                diameter={0.4164305829}
-                xRadius={9.582667981568604}
-                eccentricity={.08347045379205167} //eccentricity
-                // incline={7.436867435425389}
-
-                aphelion={10.3825376265287} //aphelion * 10
-                perihelion={8.782798336608509} //perihelion * 10
-                speedRatio={6.817303746 / 30}
-            />
-            <Asteroid 
-                // position={[21.70692743796778 * Math.cos(12.01802604414806), 21.70692743796778 * Math.sin(12.01802604414806), 0]} //semi-major axis * 10
-                position={[21.70692743796778, 0, 0]}
-                diameter={1.411050695} 
-                xRadius={21.70692743796778}
-                eccentricity={.6977429473838328} //eccentricity
-                // incline={12.01802604414806}
-                aphelion={36.85278296718241} //aphelion * 10
-                perihelion={6.561071908753151} //perihelion * 10
-                speedRatio={4.8991899774 / 30} //km/s speed / earth km/s speed
-            />
+            {props.asteroids ? populateAsteroids() : defaultAsteroids()}
+            
         </>
     )
 

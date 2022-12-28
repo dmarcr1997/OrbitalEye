@@ -10,4 +10,8 @@ export interface NEODataObject {
     absoluteMagnitude: number;
     hazardous: boolean;
     sentry: boolean;
+    semiMajorAxis?: number;
+    eccentricity?: number;
+    aphelion?: number;
+    perihelion?: number;
 };

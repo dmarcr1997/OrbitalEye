@@ -5,6 +5,7 @@ import AsteroidColorMap from '../assets/textures/asteroid/ground_0010_color_4k.j
 import AsteroidNormalMap from '../assets/textures/asteroid/ground_0010_normal_2k.png';
 import AsteroidSpecMap from '../assets/textures/asteroid/ground_0010_height_4k.png';
 import { useRef } from 'react';
+import { Text } from '@react-three/drei';
 const EARTH_DIAMETER = 12742;
 
 function Asteroid(props: any) {
@@ -26,6 +27,8 @@ function Asteroid(props: any) {
         <>
             {/* <pointLight color='#f6f3ea' position={[2, 0, 2]} intensity={1.2} /> */}
             <mesh position={props.position} ref={planetRef}>
+                <Text color="white" position={[0, 2, 0]} scale={[5, 5, 5]}>{props.textProperties.name}</Text>
+                <Text color="white" position={[0, 1, 0]} scale={[2, 2, 2]}>{props.textProperties.bounty}</Text>
                 <sphereGeometry args={[radius, 32, 32]} />
                 <meshPhongMaterial specularMap={specularMap} />
                 <meshStandardMaterial map={colorMap} normalMap={normalMap} metalness={0.4} roughness={0.7} />

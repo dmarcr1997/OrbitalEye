@@ -6,6 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+
 const NeoList = ({ items, deleteHandler }: any) => {
     return (
         <Box component={Paper} sx={{border: '2px solid #27163c', textAlign: 'left' }}>

@@ -11,7 +11,7 @@ import { NEODataObject } from '../../models/INEODataObject';
 import { useAddress } from '@thirdweb-dev/react';
 import { useNavigate } from 'react-router-dom';
 
-const Dashboard = () => {
+const Dashboard = ({setAstroids}: any) => {
     const [items, setItems] = useState<NEODataObject[]>([]);
     const [rows, setRows] = useState<NEODataObject[]>([]);
     const [now, setNow] = useState(new Date());
@@ -27,6 +27,7 @@ const Dashboard = () => {
         const goToLanding = () => navigate('/');
         if(!address){
             console.log('No Wallet Connected');
+            goToLanding()
         } else {
             setLoading(true);
         }
@@ -49,14 +50,28 @@ const Dashboard = () => {
         }
     },[loading]);
 
-    function addNEO(neo: NEODataObject) {
+    async function addNEO(neo: NEODataObject) {
         if(items.find(item => item.id === neo.id))
             return;
+        await fetch(neo.link)
+            .then(response => response.json())
+            .then(data => {          
+                const orbitData = data.orbital_data;
+                neo.semiMajorAxis = Number(orbitData.semi_major_axis);
+                neo.eccentricity = Number(orbitData.eccentricity);
+                neo.aphelion = Number(orbitData.aphelion_distance);
+                neo.perihelion =  Number(orbitData.perihelion_distance);
+            })
         setItems(values => [
             ...values,
             neo
         ]);
     }
+
+    useEffect(() => {
+        if(items)
+            setAstroids(items);
+    }, [items])
 
     function changeStart(e: any) {
         const date = new Date(e.target.value);
@@ -88,7 +103,7 @@ const Dashboard = () => {
             name: name,
             link: links.self,
             bounty: floorItTwoPlaces(bounty),
-            velocity: floorItTwoPlaces(closestApproachData.relative_velocity.kilometers_per_hour),
+            velocity: floorItTwoPlaces(closestApproachData.relative_velocity.kilometers_per_second),
             missDistance: floorItTwoPlaces(closestApproachData.miss_distance.kilometers),
             diameter: floorItTwoPlaces(avgEstDiameter),
             closestApproachDate: closestApproachData.close_approach_date,
