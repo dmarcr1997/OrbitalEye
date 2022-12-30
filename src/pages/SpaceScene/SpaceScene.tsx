@@ -30,7 +30,7 @@ const useKeyPress = targetKey => {
         window.addEventListener('keyup', upHandler);
         return () => {
             window.removeEventListener('keydown', downHandler);
-            pwindow.removeEventListener('keyup', upHandler);
+            window.removeEventListener('keyup', upHandler);
         };
     }, []);
     return keyPressed;
