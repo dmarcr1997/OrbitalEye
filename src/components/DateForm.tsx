@@ -6,7 +6,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
-const DateForm = ({ startChange, endChange, update, now, later}: any) => {
+const DateForm = ({ startChange, now}: any) => {
     return (
         <Box component={Paper} sx={{border: '2px solid #27163c' }}>
             <Grid container>
@@ -22,16 +22,7 @@ const DateForm = ({ startChange, endChange, update, now, later}: any) => {
                     <InputLabel sx={{textAlign: 'left', ml: 2}}>
                         Start Date: {now.toISOString()}
                     </InputLabel>
-                    <OutlinedInput value={now} onChange={startChange} type='date' sx={{width: '90%'}}></OutlinedInput>
-                </Grid>
-                <Grid item xs={12}>
-                    <InputLabel sx={{textAlign: 'left', ml: 2}}>
-                        End Date: {later.toISOString()}
-                    </InputLabel>
-                    <OutlinedInput value={later} onChange={endChange} type='date' sx={{width: '90%'}}></OutlinedInput>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button onClick={update} sx={{ mt: 2, mb: 5 }} variant="outlined">Get NEOs</Button>
+                    <OutlinedInput value={now} onChange={startChange} type='date' sx={{width: '90%', mb: 8}}></OutlinedInput>
                 </Grid>
             </Grid>       
         </Box>

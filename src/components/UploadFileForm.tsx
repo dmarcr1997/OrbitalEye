@@ -45,7 +45,7 @@ const UploadFileForm = ({neos}: any) => {
     }
 
     const checkData = () => {
-        const shouldUpload = uploading || !file || studiedBody === '';
+        const shouldUpload = !uploading && file && studiedBody !== '';
         return shouldUpload;
     }
 
@@ -75,7 +75,7 @@ const UploadFileForm = ({neos}: any) => {
                     </Button>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button onClick={sendFile} sx={{ mt: 2, mb: 5 }} disabled={checkData()} variant="contained">Get NEOs</Button>
+                    <Button onClick={sendFile} sx={{ mt: 2, mb: 5 }} disabled={!checkData()} variant="contained">Submit Data</Button>
                 </Grid>
             </Grid>
         </Box>

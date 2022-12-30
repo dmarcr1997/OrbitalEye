@@ -1,5 +1,5 @@
 import { useFrame, useLoader } from '@react-three/fiber';
-import { MapControls } from '@react-three/drei';
+import { FirstPersonControls } from '@react-three/drei';
 import React, { useRef } from 'react';
 import { TextureLoader } from 'three';
 import * as THREE from 'three';
@@ -67,7 +67,7 @@ const Earth = (props: any) => {
             />
             <Asteroid 
                 // position={[21.70692743796778 * Math.cos(12.01802604414806), 21.70692743796778 * Math.sin(12.01802604414806), 0]} //semi-major axis * 10
-                position={[21.70692743796778, 0, 0]}
+                position={[21.70692743796778, 0, 0 ]}
                 diameter={1.411050695} 
                 xRadius={21.70692743796778}
                 eccentricity={.6977429473838328} //eccentricity
@@ -110,7 +110,7 @@ const Earth = (props: any) => {
                     panSpeed={0.5} 
                     rotateSpeed={0.4}
                 /> */}
-                <MapControls />
+                <FirstPersonControls enabled={props.enabled} autoForward={false} activeLook={true} constrainVertical={false} movementSpeed={10} lookSpeed={0.075} lookVertical={true}/>
             </mesh>
             {props.asteroids ? populateAsteroids() : defaultAsteroids()}
             

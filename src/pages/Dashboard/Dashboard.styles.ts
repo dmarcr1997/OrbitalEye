@@ -7,6 +7,6 @@ export const dashboardContainer = {
     backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     width: '100vw',
-    height: '180vh',
+    height: '120vh',
 };
 export const dashboardNEOTable = { color: 'white', backgroundColor: 'black', maxWidth: '100%', maxHeight: '100%', overflow: 'scrollbar', boxSizing: 'content-box' };
