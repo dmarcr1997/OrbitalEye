@@ -1,4 +1,4 @@
-import { Container, Grid } from '@mui/material';
+import { Button, Container, Grid } from '@mui/material';
 import { SceneContainer } from './SpaceScene.styles';
 import { Canvas, useFrame, ThreeElements } from '@react-three/fiber';
 import React, { Suspense, useEffect, useRef, useState } from 'react';
@@ -39,11 +39,11 @@ const useKeyPress = targetKey => {
 const SpaceScene = () => {
     const [asteroids, setAsteroids] = useState([])
     const [enabled, setEnabled] = useState(false);
-    const spacePressed = useKeyPress('p');
 
-    useEffect(() => {
+    function toggleEnable() {
         setEnabled(!enabled);
-    },[spacePressed])
+    }
+
     return (
         <ThemeProvider theme={theme} >
             <Container maxWidth={false} sx={SceneContainer}>
@@ -55,6 +55,9 @@ const SpaceScene = () => {
                             </Suspense>
                         </Canvas>
                     </Grid>
+                    <Button sx={{width: '100%', mt: 1, mb: 2, ml: 2 }} onClick={toggleEnable}>
+                            {enabled ? 'Pause' : 'Enable Control'}
+                    </Button>
                     <NeoDataLayer pushItemsUp={setAsteroids}/>
                 </Grid>
             </Container>

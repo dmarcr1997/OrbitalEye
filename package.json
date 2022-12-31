@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "init-alchemy": "node src/scripts/init-sdk.js",
+    "deploy-drop": "node src/scripts/deploy-drop.js",
+    "config-nft-batch": "node src/scripts/config-nft.js",
+    "claim-conditions": "node src/scripts/claim-cond.js"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -19,6 +23,7 @@
     "@thirdweb-dev/sdk": "^3.6.8",
     "@types/three": "^0.146.0",
     "dangerously-set-html-content": "^1.0.12",
+    "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

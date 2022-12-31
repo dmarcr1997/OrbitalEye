@@ -1,6 +1,6 @@
 import { useFrame, useLoader } from '@react-three/fiber';
 import { FirstPersonControls } from '@react-three/drei';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { TextureLoader } from 'three';
 import * as THREE from 'three';
 import EarthCloudMap from '../assets/textures/8k_earth_clouds.jpg';
@@ -89,7 +89,7 @@ const Earth = (props: any) => {
             <pointLight color='#f6f3ea' position={[2, 0, 2]} intensity={2.2} />
             <Stars radius={300} depth={60} count={20000} factor={7} saturation={0} fade={true} />
             <mesh ref={cloudRef}>
-                <sphereGeometry args={[  1.005, 32, 32 ]}/>
+                <sphereGeometry args={[ 1.005, 32, 32 ]}/>
                 <meshPhongMaterial
                     map={cloudMap} 
                     opacity={0.4} 
@@ -112,7 +112,7 @@ const Earth = (props: any) => {
                 /> */}
                 <FirstPersonControls enabled={props.enabled} autoForward={false} activeLook={true} constrainVertical={false} movementSpeed={10} lookSpeed={0.075} lookVertical={true}/>
             </mesh>
-            {props.asteroids ? populateAsteroids() : defaultAsteroids()}
+            {props.asteroids.length > 0 && props.asteroids ? populateAsteroids() : defaultAsteroids()}
             
         </>
     )

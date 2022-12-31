@@ -26,24 +26,16 @@ const Dashboard = () => {
             setLoading(true);
         }
     }, [address, navigate]);
-    
-    const theme = createTheme({
-        palette: {
-            mode: 'dark',
-        },
-    });
 
     return (
-        <ThemeProvider theme={theme}>
-            <Container maxWidth={false} sx={dashboardContainer}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <UploadFileForm neos={items}/>
-                    </Grid>
-                    <NeoDataLayer pushItemsUp={setItems}/>
+        <Container maxWidth={false} sx={dashboardContainer}>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <UploadFileForm neos={items}/>
                 </Grid>
-            </Container>
-        </ThemeProvider>
+                <NeoDataLayer pushItemsUp={setItems}/>
+            </Grid>
+        </Container>
     )
 }
 

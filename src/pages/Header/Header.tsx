@@ -21,7 +21,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const pages = [{ name: 'Dashboard', route: '/dashboard'}, { name: 'View', route: '/bounty'}, { name: 'About', route: '/about'}];
-const settings = ['Profile', 'Disconnect'];
+const settings = ['Profile', 'Membership', 'Disconnect'];
 
 const Header = () => {
     const address = useAddress();
@@ -44,7 +44,19 @@ const Header = () => {
         setAnchorElUser(null);
     };
 
+    const daoPage = () => {
+        navigate('/member')
+    }
+
     const handleClickMenuItem = (item: string) => {
+        switch(item) {
+            case 'Disconnect':
+                disconnect();
+                break;
+            case 'Membership':
+                daoPage()
+                break;
+        }
         if(item === 'Disconnect'){
             disconnect();
         } else {
