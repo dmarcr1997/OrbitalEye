@@ -14,7 +14,7 @@ const NeoTable = ({data, handleClick}: any) => {
                 <TableHead>
                 <TableRow>
                     <TableCell>NAME&nbsp;(Click to Add)</TableCell>
-                    <TableCell align="right">REWARD&nbsp;($TEA)</TableCell>
+                    <TableCell align="right">REWARD&nbsp;($METEORite)</TableCell>
                     <TableCell align="right">VELOCITY&nbsp;(km/s)</TableCell>
                     <TableCell align="right">DISTANCE&nbsp;(km)</TableCell>
                     <TableCell align="right">DIAMETER&nbsp;(km)</TableCell>

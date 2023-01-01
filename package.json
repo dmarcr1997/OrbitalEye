@@ -10,7 +10,10 @@
     "init-alchemy": "node src/scripts/init-sdk.js",
     "deploy-drop": "node src/scripts/deploy-drop.js",
     "config-nft-batch": "node src/scripts/config-nft.js",
-    "claim-conditions": "node src/scripts/claim-cond.js"
+    "claim-conditions": "node src/scripts/claim-cond.js",
+    "deploy-token": "node src/scripts/deploy-token.js",
+    "print-token": "node src/scripts/print-token.js",
+    "airdrop": "node src/scripts/airdrop-token.js"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
