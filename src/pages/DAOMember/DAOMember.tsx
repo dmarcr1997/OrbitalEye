@@ -1,10 +1,10 @@
-import { Box, Paper, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Grid, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box, Paper, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Grid, InputLabel, Select, MenuItem, TextField, Slider } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Container } from '@mui/system';
 import { useAddress, ConnectWallet, useContract, useNFTBalance, Web3Button } from '@thirdweb-dev/react';
 import { useState, useEffect, useMemo } from 'react';
-import * as creatProposal from '../../scripts/create-proposal.js';
+import VoteForm from '../../components/VoteForm';
 
 const DAOMember = () => {
     const address = useAddress();
@@ -104,8 +104,8 @@ const DAOMember = () => {
     const member = () => {
         return (
             <>
-                <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="h4" component="div">🍪DAO Member Page</Typography>
-                <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="body1" component="div">Congratulations on being a member</Typography>
+                <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="h4" component="div">DAO Member Dashboard</Typography>
+                {/* <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="body1" component="div">Congratulations on being a member</Typography> */}
                 <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="h6" component="div">Member List</Typography>
                 <Grid container>
                     <Grid item xs={6}>
@@ -132,74 +132,10 @@ const DAOMember = () => {
                         </TableContainer>
                     </Grid>
                     <Grid item xs={6}>
-                        <VoteForm />
+                        <VoteForm members={memberList} />
                     </Grid>
                 </Grid>
             </>
-        )
-    }
-
-    const VoteForm = () => {
-        enum voteType {
-            MINT = 'Mint',
-            SEND = 'Send Tokens',
-            BOUNTY = 'Award Bounty'
-        };
-
-        const [variant, setVariant] = useState<voteType>(voteType.SEND);
-
-        function getProposalForm(){
-            switch (variant) {
-                case voteType.MINT:
-                    return mintForm();
-                case voteType.SEND:
-                    return sendForm();
-                case voteType.BOUNTY:
-                    return bountyForm();
-                default: 
-                    return;
-            }
-        }
-
-        const mintForm = () => (<div>Mint</div>)
-
-        const sendForm = () => (<div>Send</div>)
-
-        const bountyForm = () => (<div>Bounty</div>)
-
-        return (
-            <Box component={Paper} sx={{border: '1px solid #EAEAEA', mt: 2, width: '98%', mb: 2}}>
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
-                        <Typography sx={{ mt: 4, mb: 2, ml: 1 }} variant="h6" component="div">
-                            Create A Proposal
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <InputLabel sx={{textAlign: 'left', ml: 2 }} id="demo-simple-select-label">Type</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            value={variant}
-                            sx={{ml: 4, mt: 5, mb: 5, width:'90%'}}
-                        >
-                            <MenuItem onClick={() => setVariant(voteType.MINT)} value={voteType.MINT}>Add To Treasury</MenuItem>
-                            <MenuItem onClick={() => setVariant(voteType.SEND)} value={voteType.SEND}>Send Tokens to Member</MenuItem>
-                            <MenuItem onClick={() => setVariant(voteType.BOUNTY)} value={voteType.BOUNTY}>Award Bounty</MenuItem>
-                        </Select>
-                        {getProposalForm()}
-                    </Grid>
-                    {/* <Grid item xs={12}>
-                        <InputLabel sx={{textAlign: 'left', ml: 2}} id="demo-simple-select-label">Data Zip File</InputLabel>
-                        <Button variant="outlined" sx={{margin: 'auto', alignItems: 'center', mb: 5}}>
-                            <input style={{textAlign: 'center' }} onChange={addFile} type="file" accept='.zip,.rar,.7zip'/>
-                        </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Button onClick={sendFile} sx={{ mt: 2, mb: 5 }} disabled={!checkData()} variant="contained">Submit Data</Button>
-                    </Grid> */}
-                </Grid>
-            </Box>
         )
     }
 
