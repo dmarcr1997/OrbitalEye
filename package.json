@@ -13,7 +13,9 @@
     "claim-conditions": "node src/scripts/claim-cond.js",
     "deploy-token": "node src/scripts/deploy-token.js",
     "print-token": "node src/scripts/print-token.js",
-    "airdrop": "node src/scripts/airdrop-token.js"
+    "airdrop": "node src/scripts/airdrop-token.js",
+    "deploy-vote": "node src/scripts/deploy-vote.js",
+    "setup-vote": "node src/scripts/setup-vote.js"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",

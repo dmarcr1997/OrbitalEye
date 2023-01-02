@@ -33,7 +33,7 @@ const UploadFileForm = ({neos}: any) => {
 
     function getSelectNEOs() {
         if(neos.length > 0) 
-            return neos.map((value: NEODataObject) => <MenuItem onClick={() => handleChangeNeo(value.name)}value={value.name}>{value.name}</MenuItem>)
+            return neos.map((value: NEODataObject) => <MenuItem onClick={() => handleChangeNeo(value.name)} value={value.name}>{value.name}</MenuItem>)
         return <MenuItem value={undefined}>No NEO Selected</MenuItem>
     }
 

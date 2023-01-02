@@ -1,9 +1,10 @@
-import { Box, Paper, TableContainer, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import { Box, Paper, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Grid, InputLabel, Select, MenuItem } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Container } from '@mui/system';
 import { useAddress, ConnectWallet, useContract, useNFTBalance, Web3Button } from '@thirdweb-dev/react';
 import { useState, useEffect, useMemo } from 'react';
+import * as creatProposal from '../../scripts/create-proposal.js';
 
 const DAOMember = () => {
     const address = useAddress();
@@ -106,30 +107,102 @@ const DAOMember = () => {
                 <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="h4" component="div">🍪DAO Member Page</Typography>
                 <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="body1" component="div">Congratulations on being a member</Typography>
                 <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="h6" component="div">Member List</Typography>
-                <TableContainer sx={{ maxHeight: 400, border: '1px solid #EAEAEA', mt: 4, width: '50%', ml: 2, mb: 2 }} component={Paper}>
-                    <Table stickyHeader aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>ADDRESS</TableCell>
-                                <TableCell align="right">TOKEN AMOUNT</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            { memberList.map((member: any) => (
-                                <TableRow
-                                key={`${member.address}`}
-                                sx={{ '&:last-child td, &:last-child th': { borderRight: '1px dotted #EAEAEA' } }}
-                                >
-                                    <TableCell align="left">{member.address}</TableCell>
-                                    <TableCell align="right">{member.tokenAmount}</TableCell>
+                <Grid container>
+                    <Grid item xs={6}>
+                        <TableContainer sx={{ maxHeight: 400, border: '1px solid #EAEAEA', mt: 2, width: '95%', ml: 2, mb: 2 }} component={Paper}>
+                        <Table stickyHeader aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>ADDRESS</TableCell>
+                                    <TableCell align="right">TOKEN AMOUNT</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+                            <TableBody>
+                                { memberList.map((member: any) => (
+                                    <TableRow
+                                    key={`${member.address}`}
+                                    sx={{ borderRight: '1px dotted #EAEAEA' }}
+                                    >
+                                        <TableCell align="left">{member.address}</TableCell>
+                                        <TableCell align="right">{member.tokenAmount}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                        </TableContainer>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <VoteForm />
+                    </Grid>
+                </Grid>
             </>
         )
     }
+
+    const VoteForm = () => {
+        enum voteType {
+            MINT = 'Mint',
+            SEND = 'Send Tokens',
+            BOUNTY = 'Award Bounty'
+        };
+
+        const [variant, setVariant] = useState<voteType>(voteType.SEND);
+
+        function getProposalForm(){
+            switch (variant) {
+                case voteType.MINT:
+                    return mintForm();
+                case voteType.SEND:
+                    return sendForm();
+                case voteType.BOUNTY:
+                    return bountyForm();
+                default: 
+                    return;
+            }
+        }
+
+        const mintForm = () => (<div>Mint</div>)
+
+        const sendForm = () => (<div>Send</div>)
+
+        const bountyForm = () => (<div>Bounty</div>)
+
+        return (
+            <Box component={Paper} sx={{border: '1px solid #EAEAEA', mt: 2, width: '98%', mb: 2}}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography sx={{ mt: 4, mb: 2, ml: 1 }} variant="h6" component="div">
+                            Create A Proposal
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <InputLabel sx={{textAlign: 'left', ml: 2 }} id="demo-simple-select-label">Type</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={variant}
+                            sx={{ml: 4, mt: 5, mb: 5, width:'90%'}}
+                        >
+                            <MenuItem onClick={() => setVariant(voteType.MINT)} value={voteType.MINT}>Add To Treasury</MenuItem>
+                            <MenuItem onClick={() => setVariant(voteType.SEND)} value={voteType.SEND}>Send Tokens to Member</MenuItem>
+                            <MenuItem onClick={() => setVariant(voteType.BOUNTY)} value={voteType.BOUNTY}>Award Bounty</MenuItem>
+                        </Select>
+                        {getProposalForm()}
+                    </Grid>
+                    {/* <Grid item xs={12}>
+                        <InputLabel sx={{textAlign: 'left', ml: 2}} id="demo-simple-select-label">Data Zip File</InputLabel>
+                        <Button variant="outlined" sx={{margin: 'auto', alignItems: 'center', mb: 5}}>
+                            <input style={{textAlign: 'center' }} onChange={addFile} type="file" accept='.zip,.rar,.7zip'/>
+                        </Button>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button onClick={sendFile} sx={{ mt: 2, mb: 5 }} disabled={!checkData()} variant="contained">Submit Data</Button>
+                    </Grid> */}
+                </Grid>
+            </Box>
+        )
+    }
+
     return (
         <Container maxWidth={false}>
             <Box component={Paper} sx={{border: '2px solid #27163c', textAlign: 'left', mt: 2 }}>
