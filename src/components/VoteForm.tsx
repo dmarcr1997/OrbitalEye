@@ -1,6 +1,5 @@
 import { Box, Button, Grid, InputLabel, MenuItem, Paper, Select, Slider, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import * as creatProposal from '../scripts/create-proposal.js';
 
 const VoteForm = (props: any) => {
     enum voteType {
@@ -9,10 +8,11 @@ const VoteForm = (props: any) => {
         BOUNTY = 'Award Bounty'
     };
 
-    const [variant, setVariant] = useState<voteType>(voteType.SEND);
+    const [variant, setVariant] = useState<voteType>(voteType.MINT);
     const [tokenAmount, setTokenAmount] = useState<Number>(1);
     const [selectedWallet, setSelectedWallet] = useState('');
     const [bountyWallet, setBountyWallet] = useState('');
+
     function getProposalForm(){
         switch (variant) {
             case voteType.MINT:
@@ -39,7 +39,8 @@ const VoteForm = (props: any) => {
     function sendProposal() {
         switch (variant) {
             case voteType.MINT:
-                console.log("Proposal sent: Minting $", tokenAmount);
+                console.log("Proposal sent: Minting", tokenAmount);
+                // creatProposal([variant, {amount: tokenAmount}]);
                 setTokenAmount(0);
                 break;
             case voteType.SEND:
@@ -52,6 +53,8 @@ const VoteForm = (props: any) => {
                 setTokenAmount(0);
                 setBountyWallet('');
                 break;
+            default:
+                return;
         }
     }
 
@@ -141,15 +144,6 @@ const VoteForm = (props: any) => {
                     {getProposalForm()}
                     <Button onClick={sendProposal} sx={{ mt: 2, mb: 2, ml: 2 }} variant="contained">Create Proposal</Button>
                 </Grid>
-                {/* <Grid item xs={12}>
-                    <InputLabel sx={{textAlign: 'left', ml: 2}} id="demo-simple-select-label">Data Zip File</InputLabel>
-                    <Button variant="outlined" sx={{margin: 'auto', alignItems: 'center', mb: 5}}>
-                        <input style={{textAlign: 'center' }} onChange={addFile} type="file" accept='.zip,.rar,.7zip'/>
-                    </Button>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button onClick={sendFile} sx={{ mt: 2, mb: 5 }} disabled={!checkData()} variant="contained">Submit Data</Button>
-                </Grid> */}
             </Grid>
         </Box>
     )

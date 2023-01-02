@@ -123,7 +123,7 @@ const DAOMember = () => {
                                     key={`${member.address}`}
                                     sx={{ borderRight: '1px dotted #EAEAEA' }}
                                     >
-                                        <TableCell align="left">{member.address}</TableCell>
+                                        <TableCell align="left">{shortenAddress(member.address)}</TableCell>
                                         <TableCell align="right">{member.tokenAmount}</TableCell>
                                     </TableRow>
                                 ))}
