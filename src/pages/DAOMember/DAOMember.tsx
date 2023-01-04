@@ -5,7 +5,7 @@ import { Container } from '@mui/system';
 import { useAddress, ConnectWallet, useContract, useNFTBalance, Web3Button } from '@thirdweb-dev/react';
 import { useState, useEffect, useMemo } from 'react';
 import VoteForm from '../../components/VoteForm';
-
+import ProposalList from '../../components/ProposalList';
 const DAOMember = () => {
     const address = useAddress();
 
@@ -133,6 +133,9 @@ const DAOMember = () => {
                     </Grid>
                     <Grid item xs={6}>
                         <VoteForm members={memberList} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <ProposalList hasClaimedNFT={hasClaimedNFT} address={address} />
                     </Grid>
                 </Grid>
             </>

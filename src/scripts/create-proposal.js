@@ -1,5 +1,35 @@
-import sdk from "./init-sdk.js";
 import { ethers } from "ethers";
+
+import { ThirdwebSDK } from "@thirdweb-dev/sdk";
+import env from "ts-react-dotenv";
+// Some quick checks to make sure our .env is working.
+if (!env.PRIVATE_KEY || env.PRIVATE_KEY === "") {
+    console.log("🛑 Private key not found.");
+}
+
+if (!env.ALCHEMY_API_URL || env.ALCHEMY_API_URL === "") {
+    console.log("🛑 Alchemy API URL not found.");
+}
+
+if (!env.WALLET_ADDRESS || env.WALLET_ADDRESS === "") {
+    console.log("🛑 Wallet Address not found.");
+}
+
+const sdk = ThirdwebSDK.fromPrivateKey(
+    // Your wallet private key. ALWAYS KEEP THIS PRIVATE, DO NOT SHARE IT WITH ANYONE, add it to your .env file and do not commit that file to github!
+    env.PRIVATE_KEY,
+    // RPC URL, we'll use our QuickNode API URL from our .env file.
+    env.ALCHEMY_API_URL
+);
+
+(async () => {
+    try {
+        const address = await sdk.getSigner().getAddress();
+        console.log("👋 SDK initialized by address:", address)
+    } catch (err) {
+        console.error("Failed to get apps from the sdk", err);
+    }
+})();
 
 async function mintTokens(data) {
     try {
@@ -36,7 +66,6 @@ async function mintTokens(data) {
         console.log("✅ Successfully created proposal to mint tokens");
     } catch (error) {
         console.error("failed to create first proposal", error);
-        process.exit(1);
     }
 }
 
@@ -83,7 +112,7 @@ async function awardBounty(data) {
     //Allow votes
 }
 
-async function createProposal (data) {
+export async function createProposal (data) {
     switch (data[0]) {
         case 'Mint':
             await mintTokens(data);
@@ -97,4 +126,3 @@ async function createProposal (data) {
     }
 }
 
-exports = {createProposal}
