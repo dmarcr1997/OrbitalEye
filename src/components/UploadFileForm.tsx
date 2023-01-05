@@ -8,8 +8,11 @@ import Typography from "@mui/material/Typography";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { NEODataObject } from '../models/INEODataObject';
+import UploadFile from './UploadFile';
+import { useAddress } from '@thirdweb-dev/react';
 
 const UploadFileForm = ({neos}: any) => {
+    const address = useAddress();
     const [studiedBody, setStudiedBody ] = useState('');
     const [file, setFile] = useState<any>({});
     const [uploading, setUploading] = useState(false);
@@ -68,15 +71,7 @@ const UploadFileForm = ({neos}: any) => {
                         {getSelectNEOs()}
                     </Select>
                 </Grid>
-                <Grid item xs={12}>
-                    <InputLabel sx={{textAlign: 'left', ml: 2}} id="demo-simple-select-label">Data Zip File</InputLabel>
-                    <Button variant="outlined" sx={{margin: 'auto', alignItems: 'center', mb: 5}}>
-                        <input style={{textAlign: 'center' }} onChange={addFile} type="file" accept='.zip,.rar,.7zip'/>
-                    </Button>
-                </Grid>
-                <Grid item xs={12}>
-                    <Button onClick={sendFile} sx={{ mt: 2, mb: 5 }} disabled={!checkData()} variant="contained">Submit Data</Button>
-                </Grid>
+                <UploadFile asteroidName={studiedBody} address={address}/>
             </Grid>
         </Box>
     )
