@@ -63,6 +63,7 @@ const VoteForm = (props: any) => {
         <>
             <InputLabel sx={{textAlign: 'left', ml: 2, mb: 4 }} id="demo-simple-select-label">Token Amount</InputLabel>
             <TextField sx={{ ml: 4, mb: 2 }} id="filled-basic" variant="filled" value={tokenAmount} onChange={updateTokenInput} />    
+            {/* @ts-ignore */}
             <Slider 
                 sx={{ ml: 4, mb: 2, width: '90%'}} 
                 aria-label="Amount" 
@@ -90,6 +91,7 @@ const VoteForm = (props: any) => {
             </Select>
             <InputLabel sx={{textAlign: 'left', ml: 2, mb: 4 }} id="demo-simple-select-label">Token Amount</InputLabel>
             <TextField sx={{ ml: 4, mb: 2 }} id="filled-basic" variant="filled" value={tokenAmount} onChange={updateTokenInput} />    
+             {/* @ts-ignore */}
             <Slider 
                 sx={{ ml: 4, mb: 2, width: '90%'}} 
                 aria-label="Amount" 
@@ -109,6 +111,7 @@ const VoteForm = (props: any) => {
             <TextField sx={{ ml: 4, mb: 2, width: '90%' }} id="filled-basic" variant="filled" value={bountyWallet} onChange={(event) => setBountyWallet(event.target.value)} />  
             <InputLabel sx={{textAlign: 'left', ml: 2, mb: 4 }} id="demo-simple-select-label">Token Amount</InputLabel>
             <TextField sx={{ ml: 4, mb: 2 }} id="filled-basic" variant="filled" value={tokenAmount} onChange={updateTokenInput} />    
+             {/* @ts-ignore */}
             <Slider 
                 sx={{ ml: 4, mb: 2, width: '90%'}} 
                 aria-label="Amount" 

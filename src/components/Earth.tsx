@@ -88,6 +88,7 @@ const Earth = (props: any) => {
             {/* <ambientLight intensity={1}/> */}
             <pointLight color='#f6f3ea' position={[2, 0, 2]} intensity={2.2} />
             <Stars radius={300} depth={60} count={20000} factor={7} saturation={0} fade={true} />
+            {/* @ts-ignore */}
             <mesh ref={cloudRef}>
                 <sphereGeometry args={[ 1.005, 32, 32 ]}/>
                 <meshPhongMaterial
@@ -98,6 +99,7 @@ const Earth = (props: any) => {
                     side={THREE.DoubleSide}
                 />
             </mesh>
+            {/* @ts-ignore */}
             <mesh ref={earthRef} rotation-z={0.41}>
                 <sphereGeometry args={[ 1, 32, 32 ]}/>
                 <meshPhongMaterial specularMap={specularMap} />

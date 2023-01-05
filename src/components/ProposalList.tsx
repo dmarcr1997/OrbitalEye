@@ -21,6 +21,7 @@ const ProposalList = ({ hasClaimedNFT, address }: any) => {
         const getAllProposals = async () => {
             try {
                 const proposals = await vote?.getAll() || [];
+                //@ts-ignore
                 setProposals(proposals);
                 console.log("🌈 Proposals:", proposals);
             } catch (error) {
@@ -143,6 +144,7 @@ const ProposalList = ({ hasClaimedNFT, address }: any) => {
                         <CardActionArea>
                             <Typography sx={{ mt: 2, ml: 2 }} variant="body1" component="div">{proposal.description}</Typography>
                             <CardContent>
+                                {/* @ts-ignore */}
                                 {proposal.votes.map(({ type, label }) => (
                                 <div key={type}>
                                     <input

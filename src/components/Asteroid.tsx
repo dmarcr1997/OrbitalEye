@@ -19,13 +19,16 @@ function Asteroid(props: any) {
         const t = clock.getElapsedTime() * props.speedRatio;
         const x = props.xRadius * Math.sin(t);
         const z = zRad * Math.cos(t);
+        //@ts-ignore
         planetRef.current.position.x = x;
+        //@ts-ignore
         planetRef.current.position.z = z;
     })
     console.log(zRad, radius)
     return (
         <>
             {/* <pointLight color='#f6f3ea' position={[2, 0, 2]} intensity={1.2} /> */}
+            {/* @ts-ignore */}
             <mesh position={props.position} ref={planetRef}>
                 <Text color="white" position={[0, 2, 0]} scale={[5, 5, 5]}>{props.textProperties.name}</Text>
                 <Text color="white" position={[0, 1, 0]} scale={[2, 2, 2]}>{props.textProperties.bounty}</Text>

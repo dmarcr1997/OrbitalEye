@@ -12,6 +12,7 @@ function Ecliptic({ xRadius = 1, zRadius = 1, inclination = 0  }) {
     const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
     
     return (
+        // @ts-ignore
         <line geometry={lineGeometry} rotation={[0, 0, inclination]}>
             <lineBasicMaterial attach="material" color="#BFBBDA" linewidth={10}/>
         </line>

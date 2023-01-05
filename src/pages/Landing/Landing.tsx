@@ -24,6 +24,7 @@ const Landing = () => {
   }, [address, navigate]);
   return (
     <Container maxWidth={false} sx={landingPageContainer}>
+       {/* @ts-ignore */}
       <Box>
         <img src={OrbitalEye} className="logo" alt="OrbitalEye logo" />
       </Box>
