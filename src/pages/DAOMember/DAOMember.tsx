@@ -6,6 +6,8 @@ import { useAddress, ConnectWallet, useContract, useNFTBalance, Web3Button } fro
 import { useState, useEffect, useMemo } from 'react';
 import VoteForm from '../../components/VoteForm';
 import ProposalList from '../../components/ProposalList';
+import FileList from '../../components/FileList';
+
 const DAOMember = () => {
     const address = useAddress();
 
@@ -22,6 +24,8 @@ const DAOMember = () => {
     const [memberTokenAmounts, setMemberTokenAmounts] = useState([]);
 
     const [memberAddresses, setMemberAddresses] = useState<any>([]);
+
+    const [showFiles, setShowFiles] = useState(false);
 
     const shortenAddress = (str: string) => {
         return str.substring(0, 6) + '...' + str.substring(str.length - 4);
@@ -101,6 +105,19 @@ const DAOMember = () => {
         )
     }
 
+    const filesSection = () => {
+        const ShowFileButton = () => <Button sx={{width: '95%', ml: 2}} onClick={() => setShowFiles(!showFiles)}>^ Submitted Files ^</Button>;
+        if(showFiles) {
+            return (
+            <>
+                <FileList />
+                {ShowFileButton()}
+            </>
+            )
+        }
+        return ShowFileButton()
+    }
+
     const member = () => {
         return (
             <>
@@ -130,6 +147,7 @@ const DAOMember = () => {
                             </TableBody>
                         </Table>
                         </TableContainer>
+                        {filesSection()}
                     </Grid>
                     <Grid item xs={6}>
                         <VoteForm members={memberList} />

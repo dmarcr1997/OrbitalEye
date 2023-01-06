@@ -46,7 +46,7 @@ const UploadFile = ({address, asteroidName, reset}: any) => {
 
     async function onChange(e: any) {
         const files = e.target.files;
-        setFile(files)
+        setFile(files);
     }
 
     return (
