@@ -14,42 +14,15 @@ import { useAddress } from '@thirdweb-dev/react';
 const UploadFileForm = ({neos}: any) => {
     const address = useAddress();
     const [studiedBody, setStudiedBody ] = useState('');
-    const [file, setFile] = useState<any>({});
-    const [uploading, setUploading] = useState(false);
+    
     function handleChangeNeo(name: string) {
         setStudiedBody(name);
-    }
-
-    async function addFile(e: any) {
-        setUploading(true);
-        const files = e.target.files;
-        try {
-            // console.log(files[0]);
-            setFile(files[0]);
-            // const added = await client.add(files[0]); ipfs connection TODO
-            // setFile({ filename: files[0].name, hash: added.path });
-        } catch (error) {
-            console.log("Error uploading file: ", error);
-        }
-        setUploading(false);
     }
 
     function getSelectNEOs() {
         if(neos.length > 0) 
             return neos.map((value: NEODataObject) => <MenuItem onClick={() => handleChangeNeo(value.name)} value={value.name}>{value.name}</MenuItem>)
         return <MenuItem value={undefined}>No NEO Selected</MenuItem>
-    }
-
-    function sendFile() {
-        if(!uploading) console.log("Sending file...", file);
-        //TODO: Send file to ipfs
-        setStudiedBody('');
-        setFile({});
-    }
-
-    const checkData = () => {
-        const shouldUpload = !uploading && file && studiedBody !== '';
-        return shouldUpload;
     }
 
     return (
@@ -71,7 +44,7 @@ const UploadFileForm = ({neos}: any) => {
                         {getSelectNEOs()}
                     </Select>
                 </Grid>
-                <UploadFile asteroidName={studiedBody} address={address}/>
+                <UploadFile asteroidName={studiedBody} address={address} reset={() => setStudiedBody('')}/>
             </Grid>
         </Box>
     )

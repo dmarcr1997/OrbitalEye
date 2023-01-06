@@ -17,11 +17,11 @@ const client = create({
     }
 });
 
-const UploadFile = ({address, asteroidName}: any) => {
+const UploadFile = ({address, asteroidName, reset}: any) => {
     
     const [file, setFile] = useState();
     const [uploading, setUploading] = useState(false);
-    console.log(projectId, projectKey)
+    
     async function sendFile() {
         setUploading(true);
         try {
@@ -35,6 +35,8 @@ const UploadFile = ({address, asteroidName}: any) => {
                 //@ts-ignore
                 const added = await client.add(file.name);
                 console.log(added);
+                setFile(undefined);
+                reset();
             }
         } catch (error) {
             console.log("Error uploading file: ", error);
@@ -54,11 +56,9 @@ const UploadFile = ({address, asteroidName}: any) => {
                 <Button variant="outlined" sx={{margin: 'auto', alignItems: 'center', mb: 5}}>
                     <input style={{textAlign: 'center' }} placeholder="Upload Data Zip File" onChange={onChange} type="file" accept='.zip,.rar,.7zip'/>
                 </Button>
-                {/* @ts-ignore */}
-                {/* <Typography variant="subtitle1"> {file.name != null ? file.name : ''}</Typography> */}
             </Grid>
             <Grid item xs={12}>
-                <Button onClick={sendFile} sx={{ mt: 2, mb: 5 }} disabled={uploading} variant="contained">Submit Data</Button>
+                <Button onClick={sendFile} sx={{ mt: 2, mb: 5 }} disabled={uploading || !file || asteroidName === ''} variant="contained">Submit Data</Button>
             </Grid>
         </>
     );
