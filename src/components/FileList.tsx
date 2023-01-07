@@ -1,10 +1,9 @@
-import { Typography, Grid } from "@mui/material";
+import { Typography, Grid, List, IconButton, ListItemText } from "@mui/material";
+import ListItem from "@mui/material/ListItem";
 import { useEffect, useState } from "react";
 
 const FileList = () => {
-    //DONE:Call backend to get list of file names and hashes
-    //TODO: Create list of files that show authors name, file/link, and asteroid 
-    //TODO: Bounty proposal button
+
     const [files, setFiles] = useState([]);
     useEffect(() => {
         async function getFiles() {
@@ -14,8 +13,21 @@ const FileList = () => {
         }
         getFiles();
     }, [])
+    //add asteroid to list
     //@ts-ignore
-    return (<Grid container sx={{ ml: 2, alignItems: 'center'}} spacing={2}>{files.map((file) => <Grid item xs={12}><Typography variant="body2">{file.fileName} - - {file.ipfsHash}</Typography></Grid>)}</Grid>)
+    return (
+    <Grid container sx={{ ml: 2, alignItems: 'center'}} spacing={2}>
+        <List dense={false}>
+            {files.map((file: any) => 
+                <ListItem>
+                <ListItemText
+                    primary={file.fileName}
+                    secondary={file.creator}
+                />
+                </ListItem>
+            )}
+        </List>
+    </Grid>)
 };
 
 export default FileList;
