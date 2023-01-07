@@ -13,7 +13,6 @@ const FileList = () => {
         }
         getFiles();
     }, [])
-    //add asteroid to list
     //@ts-ignore
     return (
     <Grid container sx={{ ml: 2, alignItems: 'center'}} spacing={2}>
@@ -21,7 +20,7 @@ const FileList = () => {
             {files.map((file: any) => 
                 <ListItem>
                 <ListItemText
-                    primary={file.fileName}
+                    primary={<>{file.fileName} -- {file.subject}</>}
                     secondary={file.creator}
                 />
                 </ListItem>

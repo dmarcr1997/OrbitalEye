@@ -29,12 +29,26 @@ const UploadFile = ({address, asteroidName, reset}: any) => {
             
             if(file !== undefined && asteroidName !== '') {
                 //@ts-ignore
-                file.name = `${asteroidName}-${address}-${Date.now()}.zip`;
-                //@ts-ignore
                 console.log(file.name);
-                //@ts-ignore
-                const added = await client.add(file.name);
-                console.log(added);
+                const added = await client.add(file);
+                const fileData = {
+                    //@ts-ignore
+                    fileName: file.name,
+                    ipfsHash: added.path,
+                    createdDate: Date.now(),
+                    creator: address,
+                    subject: asteroidName
+                };
+                const resp = await fetch('https://orbital-eye-back-end.vercel.app/files', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(fileData)
+                })
+
+                const saveResp = await resp.json();
+                console.log(fileData, saveResp);
                 setFile(undefined);
                 reset();
             }
@@ -46,7 +60,7 @@ const UploadFile = ({address, asteroidName, reset}: any) => {
 
     async function onChange(e: any) {
         const files = e.target.files;
-        setFile(files);
+        setFile(files[0]);
     }
 
     return (
