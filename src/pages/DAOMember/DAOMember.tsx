@@ -27,6 +27,8 @@ const DAOMember = () => {
 
     const [showFiles, setShowFiles] = useState(false);
 
+    const [files, setFiles] = useState([]);
+
     const shortenAddress = (str: string) => {
         return str.substring(0, 6) + '...' + str.substring(str.length - 4);
     };
@@ -68,6 +70,16 @@ const DAOMember = () => {
         getAllBalances();
     }, [hasClaimedNFT, token?.history]);
 
+    useEffect(() => {
+        async function getFiles() {
+            const response = await fetch('https://orbital-eye-back-end.vercel.app/files')
+            const fetchedFiles = await response.json();
+            setFiles(fetchedFiles);
+        }
+        getFiles();
+    }, [])
+
+
     // Now, we combine the memberAddresses and memberTokenAmounts into a single array
     const memberList = useMemo(() => {
         return memberAddresses.map((address: any) => {
@@ -106,16 +118,15 @@ const DAOMember = () => {
     }
 
     const filesSection = () => {
-        const ShowFileButton = () => <Button sx={{width: '95%', ml: 2}} onClick={() => setShowFiles(!showFiles)}>^ Submitted Files ^</Button>;
         if(showFiles) {
             return (
             <>
-                <FileList />
-                {ShowFileButton()}
+                <FileList files={files} />
+                <Button sx={{width: '95%', ml: 2}} onClick={() => setShowFiles(!showFiles)}>^ Submitted Files ^</Button>
             </>
             )
         }
-        return ShowFileButton()
+        return <Button sx={{width: '95%', ml: 2}} onClick={() => setShowFiles(!showFiles)}>^ Submitted Files ^</Button>
     }
 
     const member = () => {
@@ -150,7 +161,7 @@ const DAOMember = () => {
                         {filesSection()}
                     </Grid>
                     <Grid item xs={6}>
-                        <VoteForm members={memberList} />
+                        <VoteForm members={memberList} bounties={files} />
                     </Grid>
                     <Grid item xs={12}>
                         <ProposalList hasClaimedNFT={hasClaimedNFT} address={address} />

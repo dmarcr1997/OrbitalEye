@@ -14,14 +14,15 @@ import { useAddress } from '@thirdweb-dev/react';
 const UploadFileForm = ({neos}: any) => {
     const address = useAddress();
     const [studiedBody, setStudiedBody ] = useState('');
-    
-    function handleChangeNeo(name: string) {
-        setStudiedBody(name);
+    const [bountyAmount, setBountyAmount] = useState(0);
+    function handleChangeNeo(item: NEODataObject) {
+        setStudiedBody(item.name);
+        setBountyAmount(item.bounty);
     }
 
     function getSelectNEOs() {
         if(neos.length > 0) 
-            return neos.map((value: NEODataObject) => <MenuItem onClick={() => handleChangeNeo(value.name)} value={value.name}>{value.name}</MenuItem>)
+            return neos.map((value: NEODataObject) => <MenuItem onClick={() => handleChangeNeo(value)} value={value.name}>{value.name}</MenuItem>)
         return <MenuItem value={undefined}>No NEO Selected</MenuItem>
     }
 
@@ -44,7 +45,8 @@ const UploadFileForm = ({neos}: any) => {
                         {getSelectNEOs()}
                     </Select>
                 </Grid>
-                <UploadFile asteroidName={studiedBody} address={address} reset={() => setStudiedBody('')}/>
+                { bountyAmount !== 0 ? <Typography sx={{mt: 0, mb: 4, ml: 11}} variant="body2">Award Amount if Selected: $METEORite {bountyAmount} Tokens </Typography> : '' }
+                <UploadFile asteroidName={studiedBody} address={address} reset={() => setStudiedBody('')} amount={bountyAmount}/>
             </Grid>
         </Box>
     )

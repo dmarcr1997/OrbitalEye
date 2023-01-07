@@ -17,7 +17,7 @@ const client = create({
     }
 });
 
-const UploadFile = ({address, asteroidName, reset}: any) => {
+const UploadFile = ({address, asteroidName, reset, amount}: any) => {
     
     const [file, setFile] = useState();
     const [uploading, setUploading] = useState(false);
@@ -37,8 +37,10 @@ const UploadFile = ({address, asteroidName, reset}: any) => {
                     ipfsHash: added.path,
                     createdDate: Date.now(),
                     creator: address,
-                    subject: asteroidName
+                    subject: asteroidName,
+                    bountyAmt: amount
                 };
+                console.log(fileData);
                 const resp = await fetch('https://orbital-eye-back-end.vercel.app/files', {
                     method: 'POST',
                     headers: {

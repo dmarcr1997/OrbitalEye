@@ -9,10 +9,19 @@ const VoteForm = (props: any) => {
         BOUNTY = 'Award Bounty'
     };
 
+    interface BountyData {
+        walletId: string;
+        amount: number;
+        fileHash: string;
+        fileName: string;
+        subject: string;
+    }
+
     const [variant, setVariant] = useState<voteType>(voteType.MINT);
     const [tokenAmount, setTokenAmount] = useState<Number>(1);
     const [selectedWallet, setSelectedWallet] = useState('');
-    const [bountyWallet, setBountyWallet] = useState('');
+    const [bountyObj, setBountyObj] = useState<BountyData>();
+
     function getProposalForm(){
         switch (variant) {
             case voteType.MINT:
@@ -50,13 +59,28 @@ const VoteForm = (props: any) => {
                 setSelectedWallet('');
                 break;
             case voteType.BOUNTY:
-                console.log("Proposal sent: Awarding Bounty $", tokenAmount, " to:", bountyWallet);
-                setTokenAmount(0);
-                setBountyWallet('');
+                if(bountyObj !== undefined) {
+                    console.log("Proposal sent: Awarding Bounty $", bountyObj?.amount, " to:", bountyObj?.walletId);
+                    await createProposal([variant, {bountyObj}])
+                    setBountyObj(undefined);
+                }
                 break;
             default:
                 return;
         }
+    }
+
+    function setSelectedBounty(item: any) {
+        const bounty = props.bounties.find((b: any) => b.ipfsHash === item.ipfsHash);
+        const bountyObject: BountyData = {
+            walletId: bounty.creator,
+            amount: bounty.bountyAmt,
+            fileHash: bounty.ipfsHash,
+            fileName: bounty.fileName,
+            subject: bounty.subject
+        };
+        console.log(bountyObj);
+        setBountyObj(bountyObject);
     }
 
     const mintForm = () => (
@@ -107,21 +131,16 @@ const VoteForm = (props: any) => {
 
     const bountyForm = () => (
         <>
-            <InputLabel sx={{textAlign: 'left', ml: 2, mb:4 }} id="demo-simple-select-label">Wallet Address</InputLabel>
-            <TextField sx={{ ml: 4, mb: 2, width: '90%' }} id="filled-basic" variant="filled" value={bountyWallet} onChange={(event) => setBountyWallet(event.target.value)} />  
-            <InputLabel sx={{textAlign: 'left', ml: 2, mb: 4 }} id="demo-simple-select-label">Token Amount</InputLabel>
-            <TextField sx={{ ml: 4, mb: 2 }} id="filled-basic" variant="filled" value={tokenAmount} onChange={updateTokenInput} />    
-             {/* @ts-ignore */}
-            <Slider 
-                sx={{ ml: 4, mb: 2, width: '90%'}} 
-                aria-label="Amount" 
-                min={1} 
-                max={10000} 
-                defaultValue={tokenAmount} 
-                value={tokenAmount} 
-                onChange={updateTokenInput} 
-                getAriaValueText={valuetext}
-            />
+            <InputLabel sx={{textAlign: 'left', ml: 2 }} id="demo-simple-select-label">Select Bounty</InputLabel>
+            <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={bountyObj}
+                sx={{ml: 4, mt: 5, mb: 5, width:'90%'}}
+                onChange={(event) => setSelectedBounty(event.target.value)}
+            >
+                {props.bounties.map((bounty: any) => <MenuItem value={bounty}>{bounty.fileName} - {bounty.bountyAmt}</MenuItem>)}
+            </Select>
         </>
     )
 
@@ -221,7 +240,7 @@ async function sendTokens(data: any, sdk: any) {
         await vote.propose(description, executions);
 
         console.log(
-        "✅ Successfully created proposal to reward ourselves from the treasury, let's hope people vote for it!"
+        "✅ Successfully created proposal to Member!"
         );
     } catch (error) {
         console.error("failed to create second proposal", error);
@@ -229,9 +248,41 @@ async function sendTokens(data: any, sdk: any) {
 }
 
 async function awardBounty(data: any, sdk: any) {
-    //Send in wallet address, ipfs link, and bounty amount
-    //Get file from ipfs
-    //Allow votes
+    try {
+        // This is our governance contract.
+        const vote = await sdk.getContract("0x804FFa7B1B1e1583369162Cb7F5975942eA87C03", "vote");
+        // This is our ERC-20 contract.
+        const token = await sdk.getContract("0xCe3fF8622fa3539F3Be49f9A9A7dD8A46bAAc662", "token");
+        // Create proposal to transfer ourselves 6,900 tokens for being awesome.
+        const { amount, walletId, fileName, subject } = data.bountyObj;
+    
+        const description = "Should the DAO award the bounty of " + amount + " tokens from the treasury to " +
+        walletId + " for the following data: " + fileName + " around " + subject;
+        console.log(description)
+        const executions = [
+        {
+            // Again, we're sending ourselves 0 ETH. Just sending our own token.
+            nativeTokenValue: 0,
+            transactionData: token.encoder.encode(
+            // We're doing a transfer from the treasury to our wallet.
+            "transfer",
+            [
+                walletId,
+                ethers.utils.parseUnits(amount.toString(), 18),
+            ]
+            ),
+            toAddress: token.getAddress(),
+        },
+        ];
+
+        await vote.propose(description, executions);
+
+        console.log(
+        "✅ Successfully created proposal to reward Bounty!"
+        );
+    } catch (error) {
+        console.error("failed to create second proposal", error);
+    }
 }
 
 async function createProposal (data: any) {
