@@ -93,7 +93,7 @@ const Header = () => {
                             textDecoration: 'none',
                             }}
                         >
-                            Neo Bounties
+                            OrbitalEye
                         </Typography>
 
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
