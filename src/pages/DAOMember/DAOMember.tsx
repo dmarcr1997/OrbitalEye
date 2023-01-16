@@ -164,7 +164,7 @@ const DAOMember = () => {
                         <VoteForm members={memberList} bounties={files} />
                     </Grid>
                     <Grid item xs={12}>
-                        <ProposalList hasClaimedNFT={hasClaimedNFT} address={address} />
+                        <ProposalList hasClaimedNFT={hasClaimedNFT} address={address} numMembers={memberList.length || 0} />
                     </Grid>
                 </Grid>
             </>
