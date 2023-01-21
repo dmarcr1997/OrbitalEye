@@ -7,6 +7,7 @@ import { useState, useEffect, useMemo } from 'react';
 import VoteForm from '../../components/VoteForm';
 import ProposalList from '../../components/ProposalList';
 import FileList from '../../components/FileList';
+import NotAMemberLandingPage from '../../components/NotAMemberLandingPage';
 
 const DAOMember = () => {
     const address = useAddress();
@@ -94,27 +95,7 @@ const DAOMember = () => {
     }, [memberAddresses, memberTokenAmounts]);
 
     const notAMember = () => {
-        return(
-            <>
-                <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="h6" component="div">Mint your free 🍪DAO Membership NFT</Typography>
-                <Button className="btn-hero">
-                    <Web3Button 
-                    contractAddress={editionDropAddress}
-                    action={contract => {
-                        contract.erc1155.claim(0, 1)
-                    }}
-                    onSuccess={() => {
-                        console.log(`🌊 Successfully Minted! Check it out on OpenSea: https://testnets.opensea.io/assets/${editionDrop?.getAddress()}/0`);
-                    }}
-                    onError={error => {
-                        console.error("Failed to mint NFT", error);
-                    }}
-                    >
-                    Mint your NFT (FREE)
-                    </Web3Button>
-                </Button>
-            </>
-        )
+        return <NotAMemberLandingPage editionDropAddress={editionDropAddress} />
     }
 
     const filesSection = () => {

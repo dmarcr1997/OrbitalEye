@@ -20,7 +20,7 @@ const ProposalList = ({ hasClaimedNFT, address, numMembers }: any) => {
             try {
                 let proposals = await vote?.getAll() || [];
                 // proposals.filter((proposal) => proposal.state !== 3);
-                proposals = proposals.filter((proposal) => proposal.state !== 3 )
+                proposals = proposals.filter((proposal) => proposal.state !== 3 && proposal.state !== 4 )
                 //@ts-ignore
                 setProposals(proposals);
                 console.log("🌈 Proposals:", proposals);
@@ -34,7 +34,7 @@ const ProposalList = ({ hasClaimedNFT, address, numMembers }: any) => {
     return ( 
         <Grid container spacing={2} sx={{ml: 2, width: '98%', mb: 2}}>
             <Grid item xs={12}>
-                <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="h4" component="div">Active Proposals</Typography>
+                <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="h4" component="div">{ proposals.length && proposals.length > 0 ? 'Active Proposals' : 'No Proposals Create Some...'}</Typography>
             </Grid>
             {proposals.map((proposal: any) => (
                 <Proposal proposal={proposal} numMembers={numMembers} />
