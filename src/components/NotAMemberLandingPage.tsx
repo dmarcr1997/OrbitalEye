@@ -1,7 +1,8 @@
 import { Box, Button, Grid, Paper, Typography } from "@mui/material";
-import { Web3Button } from "@thirdweb-dev/react";
+import { useContract, Web3Button } from "@thirdweb-dev/react";
 import daoBgImage from '../assets/images/OrbitalEyeDao.jpg';
 const NotAMemberLandingPage = ({editionDropAddress}: any) => {
+    const { contract: editionDrop } = useContract(editionDropAddress, "edition-drop");
     return(
     <Grid container sx={{ height: "100vh", width: '98vw', backgroundImage: `url(${daoBgImage})`, backgroundPosition: 'center'}} spacing={2}>
         <Grid item xs={8}>

@@ -1,8 +1,8 @@
-import { Box, Paper, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Grid, InputLabel, Select, MenuItem, TextField, Slider } from '@mui/material';
+import { Box, Paper, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Grid } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Container } from '@mui/system';
-import { useAddress, ConnectWallet, useContract, useNFTBalance, Web3Button } from '@thirdweb-dev/react';
+import { useAddress, useContract, useNFTBalance } from '@thirdweb-dev/react';
 import { useState, useEffect, useMemo } from 'react';
 import VoteForm from '../../components/VoteForm';
 import ProposalList from '../../components/ProposalList';
@@ -45,7 +45,6 @@ const DAOMember = () => {
                 0,
             );
             setMemberAddresses(memberAddresses);
-            console.log('🚀 Members addresses', memberAddresses);
             } catch (error) {
             console.error('failed to get member list', error);
             }
@@ -63,7 +62,6 @@ const DAOMember = () => {
             try {
                 const amounts: any = await token?.history.getAllHolderBalances();
                 setMemberTokenAmounts(amounts);
-            console.log('👜 Amounts', amounts);
             } catch (error) {
                 console.error('failed to get member balances', error);
             }
@@ -103,18 +101,17 @@ const DAOMember = () => {
             return (
             <>
                 <FileList files={files} />
-                <Button sx={{width: '95%', ml: 2}} onClick={() => setShowFiles(!showFiles)}>^ Submitted Files ^</Button>
+                <Button sx={{width: '95%', ml: 2}} onClick={() => setShowFiles(!showFiles)}>^ Hide Files ^</Button>
             </>
             )
         }
-        return <Button sx={{width: '95%', ml: 2}} onClick={() => setShowFiles(!showFiles)}>^ Submitted Files ^</Button>
+        return <Button sx={{width: '95%', ml: 2}} onClick={() => setShowFiles(!showFiles)}>^ Show Submitted Files ^</Button>
     }
 
     const member = () => {
         return (
             <>
                 <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="h4" component="div">DAO Member Dashboard</Typography>
-                {/* <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="body1" component="div">Congratulations on being a member</Typography> */}
                 <Typography sx={{ mt: 4, mb: 2, ml: 2 }} variant="h6" component="div">Member List</Typography>
                 <Grid container>
                     <Grid item xs={6}>

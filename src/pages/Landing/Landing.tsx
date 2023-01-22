@@ -3,14 +3,10 @@ import {
   ConnectWallet, 
 } from '@thirdweb-dev/react';
 import { useEffect } from 'react';
-
-//Styles and Images imports
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import { landingPageContainer } from './Landing.styles';
-import OrbitalEye from '../../assets/images/OrbitalEyeLogo.png';
 import { useNavigate } from 'react-router-dom';
 import { Grid, Typography } from '@mui/material';
+import backgroundImg from '../../assets/images/asteroidBG.jpg';
 
 const Landing = () => {
   const address = useAddress();
@@ -24,14 +20,11 @@ const Landing = () => {
     }
   }, [address, navigate]);
   return (
-    <Container maxWidth={false} sx={landingPageContainer}>
+    <Container maxWidth={false} sx={{ backgroundImage: `url(${backgroundImg})`, backgroundSize: 'cover', height: '100vh', width: '100vw' }}>
        {/* @ts-ignore */}
       <Grid container spacing={2}>
           {/* @ts-ignore */}
           <Grid item xs={12} className="card">
-            {/* <Box>
-                <img src={OrbitalEye} className="logo" alt="OrbitalEye logo" />
-            </Box> */}
             <Typography 
               variant="h1"
               sx={{
